@@ -13,7 +13,7 @@ I've made a simple system on mine so you can choose the example you want to run,
 ```python
 elif example == "3a":'
 ```
-and before the next 
+and before the next question, which will once again be another
 ```python
-elif example == "ETC"
+elif example
 ```
