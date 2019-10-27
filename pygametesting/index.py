@@ -1,31 +1,66 @@
-import pygame, sys
-from pygame.locals import *
+# Special thanks to http://programarcadegames.com/python_examples/show_file.php?file=moving_sprites.py
+ 
+import pygame
 
-def main():
-    pygame.init()
+white = (255, 255, 255)
+blue = (0, 0, 255)
 
-    display = pygame.display.set_mode((1280, 720), 0, 32)
+basex = 100;
+basey = 100;
+ 
+class Block(pygame.sprite.Sprite):
+    def __init__(self):
+        super().__init__()
+ 
+        self.image = pygame.Surface([basex, basey])
+        self.image.fill(blue)
+        self.rect = self.image.get_rect()
+ 
+class Player(Block):
+    def update(self, pressed):
+        if pressed[pygame.K_d]:
+            player.rect.x = player.rect.x + movescale;
+        elif pressed[pygame.K_a]:
+            player.rect.x = player.rect.x - movescale;
 
-    white = (255,255,255)
-    blue = (0,0,255)
+        if pressed[pygame.K_w]:
+            player.rect.y = player.rect.y - movescale;
+        elif pressed[pygame.K_s]:
+            player.rect.y = player.rect.y + movescale;
+ 
+pygame.init()
 
-    display.fill(white)
+screen_width = 1280
+screen_height = 720
+screen = pygame.display.set_mode([screen_width, screen_height])
 
-    pygame.draw.rect(display, blue, (0, 0, 100, 100))
+playing = True;
+ 
+clock = pygame.time.Clock()
 
-    running = 1;
-    while running == 1:
-        for event in pygame.event.get():
-            if event.type == quit:
-                running = 0;
-                pygame.quit()
-                sys.exit()
-                
-        pressed = pygame.key.get_pressed()
+all_sprites_list = pygame.sprite.Group()
 
-        if pressed[pygame.K_ESCAPE]:
-            running = 0;
+player = Player()
+all_sprites_list.add(player)
 
-        pygame.display.update();
+movescale = 5;
 
-main()
+while playing == True:
+
+    pressed = pygame.key.get_pressed()
+
+    for event in pygame.event.get():
+        if event.type == pygame.QUIT:
+            playing = False;
+    if pressed[pygame.K_ESCAPE]:
+        playing = False;
+
+    screen.fill(white)
+ 
+    player.update(pressed)
+    all_sprites_list.draw(screen)
+ 
+    clock.tick(60)
+    pygame.display.flip()
+ 
+pygame.quit()
