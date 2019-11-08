@@ -351,7 +351,7 @@ elif example == "13c":
     #             if (a.isdigit()):
     #                 print
     # haha sex number
-    # 
+    # test
 
     while (online == 1):
         checkOrWrite = input("Are you checking a score or writing a score (c/w)");
