@@ -4,29 +4,31 @@ import pygame
 
 white = (255, 255, 255)
 blue = (0, 0, 255)
+red = (255, 0, 0)
 
 basex = 100;
 basey = 100;
  
+x = 0;
+y = 0;
+
 class Block(pygame.sprite.Sprite):
-    def __init__(self):
+    def __init__(self, colour):
         super().__init__()
  
         self.image = pygame.Surface([basex, basey])
-        self.image.fill(blue)
+        self.image.fill(colour)
         self.rect = self.image.get_rect()
  
 class Player(Block):
-    def update(self, pressed):
-        if pressed[pygame.K_d]:
-            player.rect.x = player.rect.x + movescale;
-        elif pressed[pygame.K_a]:
-            player.rect.x = player.rect.x - movescale;
+    def update(self, x, y):
+        self.rect.x = x;
+        self.rect.y = y;
 
-        if pressed[pygame.K_w]:
-            player.rect.y = player.rect.y - movescale;
-        elif pressed[pygame.K_s]:
-            player.rect.y = player.rect.y + movescale;
+class Player2(Block):
+    def update(self, x, y):
+        self.rect.x = x;
+        self.rect.y = y;
  
 pygame.init()
 
@@ -40,8 +42,11 @@ clock = pygame.time.Clock()
 
 all_sprites_list = pygame.sprite.Group()
 
-player = Player()
+player = Player(red)
 all_sprites_list.add(player)
+
+wall = Wall(blue)
+all_sprites_list.add(wall)
 
 movescale = 5;
 
@@ -55,11 +60,20 @@ while playing == True:
     if pressed[pygame.K_ESCAPE]:
         playing = False;
 
+    if pressed[pygame.K_d]:
+        self.rect.x = self.rect.x + movescale;
+    elif pressed[pygame.K_a]:
+        self.rect.x = self.rect.x - movescale;
+    if pressed[pygame.K_w]:
+        self.rect.y = self.rect.y - movescale;
+    elif pressed[pygame.K_s]:
+        self.rect.y = self.rect.y + movescale;
+
     screen.fill(white)
- 
-    player.update(pressed)
+
     all_sprites_list.draw(screen)
- 
+    all_sprites_list.update()
+     
     clock.tick(60)
     pygame.display.flip()
  
