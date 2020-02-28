@@ -45,7 +45,7 @@ all_sprites_list = pygame.sprite.Group()
 player = Player(red)
 all_sprites_list.add(player)
 
-wall = Wall(blue)
+wall = Player2(blue)
 all_sprites_list.add(wall)
 
 movescale = 5;
